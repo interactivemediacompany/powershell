@@ -152,7 +152,8 @@ if ($type -eq "Feriale"){
             $FineStraordinario = $dateEnd.ToUniversalTime()            
         }      
     }
-<#
+}
+    <#
     if ($hStart -ge 9 -and $hStart -lt 13){
         $dateStart = $dateStart + "T11:00:00Z"
         $dateStart = [datetime]$dateStart
