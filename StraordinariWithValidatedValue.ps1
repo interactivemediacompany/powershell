@@ -117,6 +117,73 @@ if ($day -eq "Sunday"){
 
 # Se il giorno è feriale, normalizzo l'orario degli straordinari in modo che ricadano nei range previsti dallo straordiario feriale
 if ($type -eq "Feriale"){
+    switch($hStart){
+        {$_ -ge 9 -and $_ -lt 13} {
+            $dateStart = $dateStart + "T11:00:00Z"
+            $dateStart = [datetime]$dateStart
+            $InizioStraordinario = $dateStart.ToUniversalTime()
+        }
+        {$_ -ge 14 -and $_ -lt 18} {
+            $dateStart = $dateStart + "T16:00:00Z"
+            $dateStart = [datetime]$dateStart
+            $InizioStraordinario = $dateStart.ToUniversalTime()            
+        }
+    }
+
+    switch($hEnd){
+        {$_ -gt 9 -and $_ -lt 13} {
+            $dateEnd = $dateEnd + "T07:00:00Z"
+            $dateEnd = [datetime]$dateEnd
+            $FineStraordinario = $dateEnd.ToUniversalTime()
+        }
+        {$_ -eq 13} {
+            $dateEnd = $dateEnd + "T07:" + $minutoEnd + ":00Z"
+            $dateEnd = [datetime]$dateEnd
+            $FineStraordinario = $dateEnd.ToUniversalTime()            
+        }
+        {$_ -eq 14} {
+            $dateEnd = $dateEnd + "T08:" + $minutoEnd + ":00Z"
+            $dateEnd = [datetime]$dateEnd
+            $FineStraordinario = $dateEnd.ToUniversalTime()            
+        }
+        {$_ -gt 15 -and $_ -le 18} {
+            $dateEnd = $dateEnd + "T12:00:00Z"
+            $dateEnd = [datetime]$dateEnd
+            $FineStraordinario = $dateEnd.ToUniversalTime()            
+        }      
+    }
+<#
+    if ($hStart -ge 9 -and $hStart -lt 13){
+        $dateStart = $dateStart + "T11:00:00Z"
+        $dateStart = [datetime]$dateStart
+        $InizioStraordinario = $dateStart.ToUniversalTime()
+    } elseif ($hStart -ge 14 -and $hStart -lt 18){
+        $dateStart = $dateStart + "T16:00:00Z"
+        $dateStart = [datetime]$dateStart
+        $InizioStraordinario = $dateStart.ToUniversalTime()
+    } 
+    if ($hEnd -gt 9 -and $hEnd -lt 13){
+        $dateEnd = $dateEnd + "T07:00:00Z"
+        $dateEnd = [datetime]$dateEnd
+        $FineStraordinario = $dateEnd.ToUniversalTime()
+    } elseif ($hEnd -eq 13){
+        $dateEnd = $dateEnd + "T07:" + $minutoEnd + ":00Z"
+        $dateEnd = [datetime]$dateEnd
+        $FineStraordinario = $dateEnd.ToUniversalTime()
+    } elseif ($hEnd -eq 14){
+        $dateEnd = $dateEnd + "T08:" + $minutoEnd + ":00Z"
+        $dateEnd = [datetime]$dateEnd
+        $FineStraordinario = $dateEnd.ToUniversalTime()
+    } elseif ($hEnd -gt 15 -and $hEnd -le 18) {
+        $dateEnd = $dateEnd + "T12:00:00Z"
+        $dateEnd = [datetime]$dateEnd
+        $FineStraordinario = $dateEnd.ToUniversalTime()
+    }
+}
+#>
+
+<#
+if ($type -eq "Feriale"){
     if ($hStart -ge 9 -and $hStart -lt 13){
         $dateStart = $dateStart + "T11:00:00Z"
         $InizioStraordinario = $dateStart.ToUniversalTime()
@@ -132,6 +199,7 @@ if ($type -eq "Feriale"){
     }
 
 }
+#>
 #$testOraInizio = Get-Date $InizioStraordinario -Format "HH"
 #$testMinutoInizio = Get-Date $InizioStraordinario -Format "mm"
 <#
