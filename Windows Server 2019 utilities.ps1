@@ -29,5 +29,5 @@ Get-NetFirewallRule | Where-Object { $_.Name -like '*FPS*' } | Select-Object Nam
 # netdom remove [computername] /domain:[domain.local] /UserD:[Admin_domain] /PassworD:[Password_domain] /Force /reboot
 
 # Disable net adapter without confirmation (no Yes prompt to reply)
-Disable-NetAdapter -Name "Etehrnet" -Confirm:$false
+Disable-NetAdapter -Name "Ethernet" -Confirm:$false
 
