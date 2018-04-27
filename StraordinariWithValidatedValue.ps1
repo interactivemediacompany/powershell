@@ -301,4 +301,8 @@ if ($minutoStartType -eq $minutoEndType){
     }        
 }
 
+$hashTojson = [ordered]@{}
+$hashTojson.add("OreDiurnoFinale", $oreDiurnoFinale)
+$hashTojson.add("OreNotturnoFinale", $oreNotturnoFinale)
+
 Write-Host Ore Diurne di Straordinario $oreDiurnoFinale Ore Notturne di Straordinario $oreNotturnoFinale
