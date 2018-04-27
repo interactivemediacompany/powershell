@@ -102,7 +102,7 @@ $cmpEnd = [datetime]::ParseExact($dateEnd,"yyyy-MM-dd",$null)
 if ($cmpStart -eq $cmpEnd){
     $daycount = 1
 } else {
-    $daycount = ($cmpEnd - $cmpStart).Days
+    $daycount = ($cmpEnd - $cmpStart).Days + 1
 }
 
 #$dtOra = [DateTime]::ParseExact($testOra,"yyyy-MM-ddTHH:mm:ssZ",$null)
