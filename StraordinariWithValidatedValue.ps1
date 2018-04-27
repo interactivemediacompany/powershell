@@ -87,6 +87,14 @@ $workhours = [ordered]@{"00"="Notturno"
 $InizioStraordinario = "2018-04-17T21:00:00Z"
 $FineStraordinario = "2018-04-17T21:59:00Z"
 
+# Comparo il giorno di inizio e fine straordinario per vedere se sono uno o più giorni
+[DateTime]::ParseExact($cmpStart,"yyyy-MM-dd",$null)
+[DateTime]::ParseExact($cmpEnd,"yyyy-MM-dd",$null)
+
+if ($cmpStart -eq $cmpEnd){
+    
+}
+
 # Salvo le date e gli orari iniziale e finale dello straordinario provenienti da SharePoint Online
 $InizioStraordinarioSPO = $InizioStraordinario
 $FineStraordinarioSPO = $FineStraordinario
