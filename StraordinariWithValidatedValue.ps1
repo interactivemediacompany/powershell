@@ -103,6 +103,16 @@ $FineStraordinarioSPO = $FineStraordinario
 $dateStart = Get-Date $InizioStraordinario -Format "yyyy-MM-dd"
 $dateEnd = Get-Date $FineStraordinario -Format "yyyy-MM-dd"
 
+# Verifico se l'inizio e la fine dello straordinario sono nello stesso giorno
+$cmpStart = [datetime]::ParseExact($dateStart,"yyyy-MM-dd",$null)
+$cmpEnd = [datetime]::ParseExact($dateEnd,"yyyy-MM-dd",$null)
+
+if ($cmpStart -eq $cmpEnd){
+    $daycount = 1
+} else {
+    $daycount = ($cmpEnd - $cmpStart).Days + 1
+}
+
 #$dtOra = [DateTime]::ParseExact($testOra,"yyyy-MM-ddTHH:mm:ssZ",$null)
 #$dtOra = $dtOra.ToUniversalTime()
 #Write-Host Giorno Iniziale $dateStart Giorno Finale $dateEnd e test utc $testOra
