@@ -43,6 +43,13 @@ function isHoliday {
 
     $temp = get-date $day -Format "dd/MM"
     if($temp -in $holidays.keys){
+        return "Festivo"
+    } else {
+        return "Non Festivo"
+    }
+
+<#
+    if($temp -in $holidays.keys){
         write-output $true
     } else {
         write-output $false
@@ -53,7 +60,9 @@ function isHoliday {
     } else {
         Write-Output "$day is not Sunday"
     }    
+#>
 }
 
-$extarworkday = "08/04/2018"
-isHoliday ($extarworkday)
+$extarworkday = "01/04/2018"
+$type = isHoliday ($extarworkday)
+Write-Output $type
