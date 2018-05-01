@@ -154,14 +154,13 @@ $workhours = [ordered]@{"00"="Notturno"
 #$FineStraordinario = "2018-04-17T21:15:00Z"
 
 $InizioStraordinario = "2018-04-17T21:00:00Z"
-#$FineStraordinario = "2018-04-17T21:59:00Z"
-$FineStraordinario = "2018-04-22T22:00:00Z"
+$FineStraordinario = "2018-04-17T21:59:00Z"
 
 # Salvo le date e gli orari iniziale e finale dello straordinario provenienti da SharePoint Online
 $InizioStraordinarioSPO = $InizioStraordinario
 $FineStraordinarioSPO = $FineStraordinario
 
-# Salvo le date iniziale e finale in una stringa con formato yyyy-MM-dd: mi serviranno per la comparazione delle date
+# Salvo le date iniziale e finale in una stringa con formato yyyy-MM-dd
 $dateStart = Get-Date $InizioStraordinario -Format "yyyy-MM-dd"
 $dateEnd = Get-Date $FineStraordinario -Format "yyyy-MM-dd"
 
@@ -173,24 +172,8 @@ $daycount = 0
 
 if ($cmpStart -eq $cmpEnd){
     $daycount = 1
-} else {  
-#    $daycount = ($cmpEnd - $cmpStart).Days + 1
-    $hashdays = [ordered]@{}
-    $indexday = 1
-    $hashdays.add("InizioStraordianrio1",$InizioStraordinario)
-    $dateStart = $dateStart + "T23:59:59Z"
-    $dateStart = [datetime]$dateStart
-#    $InizioStraordinario = $dateStart.ToUniversalTime()
-    $hashdays.add("FineStraordinario1",$dateStart)
-    while ($daycount -lt $indexday) {
-
-        $indexday = $indexday + 1    
-        $InizioSraordinarioKey = "InizioStraordinario" + $indexday
-        $hashdays.add($InizioSraordinarioKey,"")
-        $FineStraordinarioKey = "FineStraordinario" + $indexday
-        $hashdays.add($FineStraordinarioKey,"")
-    }
-    $hashdays.add("FineStraordinario")
+} else {
+    $daycount = ($cmpEnd - $cmpStart).Days + 1
 }
 
 #$dtOra = [DateTime]::ParseExact($testOra,"yyyy-MM-ddTHH:mm:ssZ",$null)
@@ -224,12 +207,12 @@ if ($type -eq "Feriale"){
         {$_ -ge 9 -and $_ -lt 13} {
             $dateStart = $dateStart + "T11:00:00Z"
             $dateStart = [datetime]$dateStart
-#            $InizioStraordinario = $dateStart.ToUniversalTime()
+            $InizioStraordinario = $dateStart.ToUniversalTime()
         }
         {$_ -ge 14 -and $_ -lt 18} {
             $dateStart = $dateStart + "T16:00:00Z"
             $dateStart = [datetime]$dateStart
-#            $InizioStraordinario = $dateStart.ToUniversalTime()            
+            $InizioStraordinario = $dateStart.ToUniversalTime()            
         }
     }
 
@@ -237,12 +220,12 @@ if ($type -eq "Feriale"){
         {$_ -gt 9 -and $_ -lt 13} {
             $dateEnd = $dateEnd + "T07:00:00Z"
             $dateEnd = [datetime]$dateEnd
-#            $FineStraordinario = $dateEnd.ToUniversalTime()
+            $FineStraordinario = $dateEnd.ToUniversalTime()
         }
         {$_ -eq 13} {
             $dateEnd = $dateEnd + "T07:" + $minutoEnd + ":00Z"
             $dateEnd = [datetime]$dateEnd
-#            $FineStraordinario = $dateEnd.ToUniversalTime()            
+            $FineStraordinario = $dateEnd.ToUniversalTime()            
         }
         {$_ -eq 14} {
             $dateEnd = $dateEnd + "T08:" + $minutoEnd + ":00Z"
