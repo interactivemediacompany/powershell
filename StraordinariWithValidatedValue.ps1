@@ -171,26 +171,35 @@ $cmpEnd = [datetime]::ParseExact($dateEnd,"yyyy-MM-dd",$null)
 
 $daycount = 0
 
+$hashdays = [ordered]@{}
+
 if ($cmpStart -eq $cmpEnd){
-    $daycount = 1
+    $hashdays.add("InizioStraordinario1",$InizioStraordinario)
+    $hashdays.add("FineStraordinario1",$FineStraordinario)
+#    $daycount = 1
 } else {  
 #    $daycount = ($cmpEnd - $cmpStart).Days + 1
-    $hashdays = [ordered]@{}
-    $indexday = 1
-    $hashdays.add("InizioStraordianrio1",$InizioStraordinario)
+    # Conto i giorni di differenza tra inizio e fine straordinario: mi serve per costruire il ciclo e dare i valori nella hash
+    $daycount = ($cmpEnd - $cmpStart).Days
+    $indexday = 2
+    $hashdays.add("InizioStraordinario1",$InizioStraordinario)
     $dateStart = $dateStart + "T23:59:59Z"
     $dateStart = [datetime]$dateStart
 #    $InizioStraordinario = $dateStart.ToUniversalTime()
     $hashdays.add("FineStraordinario1",$dateStart)
+    $daycycle = $cmpStart.AddDays(1)
     while ($daycount -lt $indexday) {
-
-        $indexday = $indexday + 1    
-        $InizioSraordinarioKey = "InizioStraordinario" + $indexday
-        $hashdays.add($InizioSraordinarioKey,"")
-        $FineStraordinarioKey = "FineStraordinario" + $indexday
-        $hashdays.add($FineStraordinarioKey,"")
+        $sdayStart = (Get-Date $daycycle -Format "yyyy-MM-dd") + "T00:00:00Z"
+        $hashdays.add("InizioStraordinario" + $indexday, $sdayStart)
+        $sdayStop = (Get-Date $daycycle -Format "yyyy-MM-dd") + "T23:59:59Z"
+        $hashdays.add("Finestraordinario" + $indexday, $sdayStop)
+        $daycycle = $daycycle.AddDays(1)
+        $indexday = $indexday + 1
     }
-    $hashdays.add("FineStraordinario")
+    $dateEnd = $dateEnd + "T00:00:00Z"
+    $dateEnd = [datetime]$dateEnd
+    $hashdays.add("InizioStraordinario" + $daycount, $dateEnd)
+    $hashdays.add("FineStraordinario" + $daycount, $FineStraordinario)
 }
 
 #$dtOra = [DateTime]::ParseExact($testOra,"yyyy-MM-ddTHH:mm:ssZ",$null)
