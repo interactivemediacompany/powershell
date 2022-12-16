@@ -22,7 +22,8 @@ set-mailbox <mailbox name> -MessageCopyForSendOnBehalfEnabled $False
 # dove [shared mailbox] è l'indirizzo condiviso e [user mailbox] è l'indirizzo dell'utente su cui deve essere disabilitato
 # l'autodiscover per quella particolare mail condivisa
 # Articolo di riferimento: https://support.microsoft.com/en-us/help/2646504/how-to-remove-automapping-for-a-shared-mailbox-in-office-365
-# Documento di riferimento: https://docs.microsoft.com/it-it/powershell/module/exchange/add-mailboxpermission?view=exchange-ps
+# Documento di riferimento Powershell: https://docs.microsoft.com/it-it/powershell/module/exchange/add-mailboxpermission?view=exchange-ps
+# Documento di riferimento: https://learn.microsoft.com/en-us/outlook/troubleshoot/profiles-and-accounts/remove-automapping-for-shared-mailbox
 
 Remove-MailboxPermission -Identity [shared mailbox] -User [user mailbox] -AccessRights FullAccess
 
