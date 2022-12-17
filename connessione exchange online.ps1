@@ -1,4 +1,9 @@
-﻿# Eseguire questo comando (con privilegi da amministratore) solo la prima volta che si configura l'accesso in Powershell
+# Documenti di riferimento:
+# Connect to Exchange Online PowerShell - https://learn.microsoft.com/en-us/powershell/exchange/connect-to-exchange-online-powershell?view=exchange-ps
+# Connect-ExchangeOnline - https://learn.microsoft.com/en-us/powershell/module/exchange/connect-exchangeonline?view=exchange-ps
+# Disconnect-ExchangeOnline - https://learn.microsoft.com/en-us/powershell/module/exchange/disconnect-exchangeonline?view=exchange-ps
+
+# Eseguire questo comando (con privilegi da amministratore) solo la prima volta che si configura l'accesso in Powershell
 
 Set-ExecutionPolicy RemoteSigned
 
@@ -6,18 +11,15 @@ Set-ExecutionPolicy RemoteSigned
 
 $UserCredential = Get-Credential
 
-# Creare una nuova sessione
+# Connessione a Exchange Online
 
-$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $UserCredential -Authentication Basic -AllowRedirection
+Connect-ExchangeOnline -Credential $$UserCredential
 
-# Importare la sessione
-
-Import-PSSession $Session
-
-#Per fare un test che tutto sia andato a buon fine, dare un comando, per esempio 
+# Test verifica accesso
 
 Get-Mailbox
 
-# Una volta finite le operazioni, dare il comando di disconnessione dalla sessione
+# Disconnessione da Exchange Online senza prompt di conferma
 
-Remove-PSSession $Session
+Disconnect-ExchangeOnline -Confirm:$false
+
