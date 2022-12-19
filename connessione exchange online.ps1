@@ -13,7 +13,7 @@ $UserCredential = Get-Credential
 
 # Connessione a Exchange Online
 
-Connect-ExchangeOnline -Credential $$UserCredential
+Connect-ExchangeOnline -Credential $UserCredential
 
 # Test verifica accesso
 
